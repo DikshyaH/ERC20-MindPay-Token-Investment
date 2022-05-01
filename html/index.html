@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8" />
+    <title>MINDPay Investment</title>
+    <meta name="description" content="MINDPay Investment" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+    <link rel="stylesheet" href="assets/css/vendor.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+</head>
+<body>
+
+<div className="App">
+    <h1>Welcome to MindPay Investment!</h1>
+    <h2>1 Ether = 1000 Mindpay</h2>
+    <p>
+        Enter the Ether value to view the MINDPAY Tokens you want to Invest
+    </p>
+
+    <p id="Connection">Not Connected</p>
+    <input type ="text" id="Ether" maxLength="20"  value = "Enter Ether investment"></input>
+    <p></p>
+    <button type ="button" id="Convert" >Convert</button>
+    <p id ="output">0 MINDPAY</p>
+    <button type ="button" id="Supply" >Check MindPay Supply</button>
+    <p></p>
+    <button type ="button" id="Invest" >Invest  into MINDPAY</button>
+    <p id="Invested"></p>
+    <button type ="button" id="Reserve" >Check Reserve Balance</button>
+    <button type ="button" id="Liquid" >Check Liquid Balance</button>
+    <p></p>
+    <button type ="button" id="Cancel" >Cancel Investment</button>
+    <button type ="button" id="Stake" >Stake Investment</button>
+
+    <p></p>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="assets/js/vendor.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+
+</body>  
+</html>
