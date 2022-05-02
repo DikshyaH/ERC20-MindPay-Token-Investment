@@ -16,6 +16,7 @@ const initialize = () => {
   var Cancel = document.getElementById("Cancel");
   var Stake = document.getElementById("Stake");
   var Investedmessage = document.getElementById("Invested");
+  var Reservemessage = document.getElementById("Reserved");
 // var signature_received = document.getElementById('signature');
 
 console.log(socket);
@@ -45,10 +46,21 @@ socket.on( 'connect', function() {
     
 });
 
+Reserve.addEventListener('click', function (event) {
+    socket.emit("getReservevalue");   
+  });
+
+
 socket.on("InvestmentComplete", (arg) => {
   console.log(arg)
   Investedmessage.innerHTML = "Investment Contract deployed at "+ arg; // world
 });
+
+socket.on("sendReservevalue", (reservedetails)=> {
+  console.log(reservedetails)
+  Reservemessage.innerHTML = "Reserve contract details :" + reservedetails; // world
+});
+
 
 
 });

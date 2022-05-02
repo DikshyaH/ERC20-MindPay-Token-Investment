@@ -67,6 +67,7 @@ MindPaydeployment();
 
 // const target_contractaddress = process.env.TARGET_CONTRACT_ADDRESS;
 var newInvestmentContract ="";
+var investor = "";
 const metadata_two = JSON.parse(fs.readFileSync('./client/src/contracts/InvestmentTracker.json').toString())
 io.on('connection', (socket) => {
   // ...
@@ -77,7 +78,7 @@ io.on('connection', (socket) => {
     investmentamount = argument2;
     console.log(investmentamount);
     tokenamount = investmentamount * 1000;
-    investment_contract = new web3.eth.Contract(metadata_two.abi);
+    var investment_contract = new web3.eth.Contract(metadata_two.abi);
     console.log("MindPay address verification " + MindPay_contractaddress);
     investment_contract.deploy({data:metadata_two.bytecode,arguments: [tokenamount,MindPay_contractaddress]} ).send({
       from:investor,
@@ -85,29 +86,21 @@ io.on('connection', (socket) => {
         newInvestmentContract = newContractInstance.options.address;
         console.log(newContractInstance.options.address) // instance with the new contract address
         socket.emit("InvestmentComplete", newInvestmentContract);
+        const contractInstance = new web3.eth.Contract(metadata_two.abi,newInvestmentContract);
+        contractInstance.methods.processInvestment().send({from:investor}, function(err,data){
+          console.log("Ether distribution complete");
+        });
     });
-   
-    // const new_Investment = new ethers.Contract(metadata_two.abi, metadata_two.bytecode, provider);
-    // const price = ethers.utils.formatUnits( provider.getGasPrice(), 'gwei')
-    // const options = {gasLimit: 3000000, gasPrice: ethers.utils.parseUnits(price, 'gwei'),value: ethers.utils.parseEther(investmentamount)}
-    // const newInvestmentContract = new_Investment.deploy(tokenamount,MindPay_contractaddress,options)
-    // newInvestmentContract.deployed()
-    // Investment_contractaddress = contract.address
-
-    // const balance = (newInvestmentContract.methods.processInvestment());
-    // ethers.utils.formatEther(balance)
-
-
-  // });
-//   socket.on("signature", (arg1,arg2) => {
-//     console.log("Signature : "+ arg1); 
-//     console.log("Owner : "+arg2);
-//     console.log("Verification for the message and signature is to be done");
-//     let accounts = web3.eth.getAccounts().then(e => console.log(e[1]));
-//     var ReceieverContract = new web3.eth.Contract(metadata_two.abi, investor);
-//     const verifier = ReceieverContract.methods.forward(target_contractaddress,arg2,message_sent,arg1).send({ from: admin_address });
-//     console.log(verifier);
-  
+ 
   });
+  socket.on("getReservevalue", () => {
+    console.log("newInvestment1" + newInvestmentContract);
+    const contractInstance = new web3.eth.Contract(metadata_two.abi,newInvestmentContract);
+    contractInstance.methods.getReserveInvestmentContractBalance().call({from:investor}, function(err,data){
+      socket.emit("sendReservevalue", data);
+      console.log(data.toString());
+    });
+
+  }); 
 
 });
