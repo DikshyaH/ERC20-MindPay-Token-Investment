@@ -16,7 +16,7 @@ contract ReserveContract {
     constructor(address investor, uint _tokenBalance,address _parent ) public {
             owner = investor;
             createdAt = block.timestamp;
-            unlock = createdAt + 1 minutes;
+            unlock = createdAt + 15 minutes;
             tokenBalance = _tokenBalance;
             stakeAddress = _parent;
             

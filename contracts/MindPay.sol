@@ -8,10 +8,13 @@ contract MindPay is ERC20 {
     uint256 _totalSupply;
 
     constructor() ERC20("MINDPAY", "MPY") public {
-        _totalSupply = 100000 * 10 **18;
-        _mint(msg.sender, _totalSupply );
+        mint(msg.sender,1000 * 10**18);
     }
-   
+     
+    function mint(address to,uint256 amount) public{
+        _mint(to,amount);
+    }  
+
     function decimals() public view virtual override returns (uint8) {
         return 18;
     }
