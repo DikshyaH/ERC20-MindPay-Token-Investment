@@ -82,6 +82,18 @@ io.on('connection', (socket) => {
     investmentamount = argument2;
     console.log(investmentamount);
     tokenamount = investmentamount * 1000;
+    if (parseInt(investmentamount) > 1 && parseInt(investmentamount) <= 5){
+      tokenamount = (0.10 * tokenamount) + tokenamount ;
+      console.log("10% additional bonus tokens: " + tokenamount);
+    }
+    else if  (parseInt(investmentamount) > 5){
+      tokenamount = (0.20 * tokenamount) + tokenamount ;
+      console.log("20% additional bonus tokens: " + tokenamount);
+    }
+    else{
+      console.log("No additional bonus tokens: " + tokenamount);
+    }
+
     console.log(tokenamount);
     var investment_contract = new web3.eth.Contract(metadata_two.abi);
     console.log("MindPay address verification " + MindPay_contractaddress);
